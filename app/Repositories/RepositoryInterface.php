@@ -12,7 +12,6 @@ interface RepositoryInterface
 
     /**
      * Get one
-     *
      * @param $id
      * @return mixed
      */
@@ -20,7 +19,6 @@ interface RepositoryInterface
 
     /**
      * Create
-     *
      * @param array $attributes
      * @return mixed
      */
@@ -28,7 +26,6 @@ interface RepositoryInterface
 
     /**
      * Update
-     *
      * @param $id
      * @param array $attributes
      * @return mixed
@@ -37,7 +34,6 @@ interface RepositoryInterface
 
     /**
      * Delete
-     *
      * @param $id
      * @return mixed
      */

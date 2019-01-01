@@ -8,38 +8,74 @@ use App\Repositories\User\UserRepositoryInterface;
 
 class RegisterController extends Controller
 {
-	/**
-     * @var UserRepositoryInterface|\App\Repositories\User
-     */
-    protected $userRepository;
+  /**
+   * [$register description]
+   * @var [type]
+   */
+  public $register = [];
 
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
+  /**
+   * @var UserRepositoryInterface|\App\Repositories\User
+   */
+  protected $userRepository;
+
+  /**
+   * [$repository description]
+   * @var [type]
+   */
+  protected $repository;
+
+  public function __construct(UserRepositoryInterface $userRepository)
+  {
+    $this->userRepository = $userRepository;
+  }
+
+  /**
+   * [register description]
+   * @return [type] [description]
+   */
+  public function register()
+  {
+    return view('frontend.register');
+  }
+
+  /**
+   * [handlingRegister description]
+   * @return [type] [description]
+   */
+  public function handlingRegister(Request $request)
+  {
+    $request->validate([
+      'name'              => 'min:5|max:20',
+      'email'             => 'email|unique:users,email',
+      'phone'             => 'numeric|digits:10|unique:users,phone',
+      'password'          => 'confirmed|min:6|max:50',
+      'confirm_password'  => 'confirmed|min:6|max:50'
+    ]);
+
+    try {
+      // insert data
+      if ($this->userRepository->insertData($request->all())) {
+        // show message success
+        $request->session()->flash('status',[
+          'type' => 'success',
+          'message' => 'Register was created successful!'
+        ]);
+      } else {
+        throw new \Exception("Error Processing Request", 1);
+      }
+    } catch (\Exception $e) {
+      // Log error
+      \Log::error($e->getMessage());
+
+      // Flash a error message
+      $request->session()->flash('status', [
+        'type' => 'danger',
+        'message' => 'Cannot register user'
+      ]);
     }
 
-	/**
-	 * [register description]
-	 * @return [type] [description]
-	 */
-    public function register()
-    {
-        return view('frontend.register');
-    }
-
-    /**
-     * [handlingRegister description]
-     * @return [type] [description]
-     */
-    public function handlingRegister(Request $request)
-    {
-    	$request->validate([
-		    'name' 	=> 'min:5|max:20',
-		    'email' => 'email',
-		    'phone' => 'numeric|size:11'
-		]);
-
- 		// get value model
-    	return view('frontend.register');
-    }
+    // Back to list page with flash message
+    return redirect()->route('home');
+  }
 }
