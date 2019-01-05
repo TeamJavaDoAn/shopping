@@ -36,6 +36,7 @@ class User extends Model
 				're_password',
         'phone',
 				'remember_token',
+        'verification_code',
 				'created_at',
 				'updated_at'
 		];

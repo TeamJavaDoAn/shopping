@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepositoryInterface;
+use Mail;
 
 class RegisterController extends Controller
 {
@@ -49,18 +50,20 @@ class RegisterController extends Controller
       'name'              => 'min:5|max:20',
       'email'             => 'email|unique:users,email',
       'phone'             => 'numeric|digits:10|unique:users,phone',
-      'password'          => 'confirmed|min:6|max:50',
-      'confirm_password'  => 'confirmed|min:6|max:50'
+      'password'          => 'min:6|max:50',
+      'confirm_password'  => 'min:6|max:50|same:password'
     ]);
 
     try {
       // insert data
       if ($this->userRepository->insertData($request->all())) {
-        // show message success
-        $request->session()->flash('status',[
-          'type' => 'success',
-          'message' => 'Register was created successful!'
-        ]);
+        $user = (object) $this->userRepository->getAllAttributes();
+        $user->password     = \Crypt::decrypt($user->password);
+        $user->re_password  = \Crypt::decrypt($user->re_password);
+        // send mail
+        Mail::send('frontend.mailfb',['user' => $user], function ($message) use ($user) {
+          $message->to($user->email, $user->name)->subject('Link active register');
+        });
       } else {
         throw new \Exception("Error Processing Request", 1);
       }

@@ -4,17 +4,25 @@ namespace App\Services;
 class CommonFunction
 {
     /**
-     * Case check show css in other page
+     * [getAllAttributes description]
+     * @return [type] [description]
      */
-    // public static function statusCss($currentPage)
-    // {
-    //     switch ($currentPage) {
-    //         case "login":
-    //             $login = new \App\Http\Controllers\Auth\LoginController();
-    //             return $login;
-    //         case "register":
-    //             $register = new \App\Http\Controllers\Auth\RegisterController();
-    //             return $register;
-    //     }
-    // }
+    public static function getAllAttributes()
+    {
+      $columns = $this->getFillable();
+      // Another option is to get all columns for the table like so:
+      // $columns = \Schema::getColumnListing($this->table);
+      // but it's safer to just get the fillable fields
+
+      $attributes = $this->getAttributes();
+
+      foreach ($columns as $column)
+      {
+          if (!array_key_exists($column, $attributes))
+          {
+              $attributes[$column] = null;
+          }
+      }
+      return $attributes;
+    }
 }

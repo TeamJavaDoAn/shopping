@@ -10,9 +10,16 @@ interface UserRepositoryInterface
   public function insertData(array $input);
 
   /**
-   * [findOnlyPublished description]
-   * @param  [type] $id [description]
-   * @return [type]     [description]
+   * [getAllAttributes description]
+   * @return [type] [description]
    */
-  public function findOnlyPublished($id);
+  public function getAllAttributes();
+
+  /**
+   * [updateUserActiveCode description]
+   * @param  [type] $user_id     [description]
+   * @param  [type] $active_code [description]
+   * @return [type]              [description]
+   */
+  public function updateUserActiveCode($user_id, $active_code);
 }
