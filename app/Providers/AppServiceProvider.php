@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
+      Schema::defaultStringLength(191);
     }
 
     /**
@@ -24,13 +24,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(
-            \App\Repositories\Product\ProductRepositoryInterface::class,
-            \App\Repositories\Product\ProductEloquentRepository::class
-        );
-        $this->app->singleton(
-            \App\Repositories\User\UserRepositoryInterface::class,
-            \App\Repositories\User\UserEloquentRepository::class
-        );
+      $this->app->singleton(
+          \App\Repositories\Product\ProductRepositoryInterface::class,
+          \App\Repositories\Product\ProductEloquentRepository::class
+      );
+      $this->app->singleton(
+          \App\Repositories\User\UserRepositoryInterface::class,
+          \App\Repositories\User\UserEloquentRepository::class
+      );
     }
 }
