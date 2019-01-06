@@ -66,4 +66,15 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
                   ->update(['active' => $active_code]);
       return $result;
     }
+
+    /**
+     * [checkLogin description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function checkLogin($data)
+    {
+      $result = $this->_model->where('name', $data['username'])->first();
+      return $result;
+    }
 }

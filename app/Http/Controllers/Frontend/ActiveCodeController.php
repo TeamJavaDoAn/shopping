@@ -36,10 +36,22 @@ class ActiveCodeController extends Controller
    */
   public function activeCode(Request $request)
   {
-    $dataArr = [
-      'active' => '1'
-    ];
-    $this->userRepository->updateUserActiveCode($request['id'], $dataArr['active']);
+    try {
+      $dataArr = [
+        'active' => '1'
+      ];
+      $this->userRepository->updateUserActiveCode($request['id'], $dataArr['active']);
+
+      // Flash a successful message
+      $request->session()->flash('success', 'Chào mừng bạn đến với trang shopping!');
+    } catch (\Exception $e) {
+      // Log error
+      \Log::error($e->getMessage());
+
+      // Flash a successful message
+      $request->session()->flash('danger', 'Bạn chưa kích hoạt tài khoản!');
+    }
+
     return redirect()->route('home');
   }
 }

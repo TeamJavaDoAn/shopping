@@ -4,7 +4,14 @@
 	<body>
 		@include('layouts.header')
 		@include('layouts.nav')
-
+    
+    <!-- Error Messages -->
+    @foreach (['danger', 'warning', 'success', 'info'] as $key)
+      @if(Session::has($key))
+        <p class="alert alert-{{ $key }}" style="text-align: center;">{{ Session::get($key) }}</p>
+      @endif
+    @endforeach
+    <!-- End error -->
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->

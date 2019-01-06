@@ -9,8 +9,13 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
             </ul>
             <ul class="header-links pull-right">
+              @if(!Request::session()->has('username'))
                 <li><a href="{{ route('register') }}"><i class="fa fa-dollar"></i> Register</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user-o"></i> Login</a></li>
+              @else
+                <li><a href="">{{ Request::session()->get('username') }}</a></li>
+                <li><a href="{{ route('logout') }}"><i class="fa fa-user-o"></i>Logout</a></li>
+              @endif
             </ul>
         </div>
     </div>
@@ -125,18 +130,21 @@
 <!-- /HEADER -->
 <!-- popup login form -->
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="loginmodal-container">
-            <h1>Login to Your Account</h1><br>
-            <form>
-                <input type="text" name="user" placeholder="Username">
-                <input type="password" name="pass" placeholder="Password">
-                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-            </form>
-            <div class="login-help">
-                <a href="{{route('register')}}">Register</a> - <a href="{{route('forgotPassword')}}">Forgot Password</a>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="loginmodal-container">
+      <h1>Login to Your Account</h1><br>
+      <form action="{{route('login')}}" method="post">
+        @csrf
+        <b>Username</b>
+        <input type="text" name="username" placeholder="Username" required>
+        <b>Password</b>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+      </form>
+      <div class="login-help">
+          <a href="{{route('register')}}">Register</a> - <a href="{{route('forgotPassword')}}">Forgot Password</a>
+      </div>
     </div>
+  </div>
 </div>
 <!-- /popup login form -->

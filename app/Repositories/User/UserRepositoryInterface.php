@@ -22,4 +22,11 @@ interface UserRepositoryInterface
    * @return [type]              [description]
    */
   public function updateUserActiveCode($user_id, $active_code);
+
+  /**
+   * [checkLogin description]
+   * @param  [type] $data [description]
+   * @return [type]       [description]
+   */
+  public function checkLogin($data);
 }
