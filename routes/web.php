@@ -31,4 +31,5 @@ Route::namespace ('Frontend')->group(function () {
 Route::namespace ('Backend')->group(function () {
 	Route::get("/admin", "AdminPageController@index")->name('admin');
 	Route::resource('users', 'UserManagementController');
+	Route::resource('menu', 'MenuController');
 });

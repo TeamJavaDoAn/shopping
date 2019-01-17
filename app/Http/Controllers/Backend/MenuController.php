@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\user;
+use App\models\menu;
 use Illuminate\Http\Request;
 use Session;
 
-class UserManagementController extends Controller {
+class MenuController extends Controller {
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		$users = \App\user::all();
-		return view('backend.user.index', compact('users'));
+
+		$menu = menu::all();
+		return view('backend.menu.index', compact('menu'));
 	}
 
 	/**
@@ -24,7 +25,7 @@ class UserManagementController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		return view('backend.user.create');
+		return View('backend.menu.create');
 	}
 
 	/**
@@ -34,7 +35,12 @@ class UserManagementController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-		//
+		$menu = new menu;
+		$menu->menu_name = $request->get('menu_name');
+		$menu->menu_link = $request->get('menu_link');
+		$menu->save();
+
+		return redirect('menu')->with('success', 'Information has been added');
 	}
 
 	/**
@@ -54,8 +60,8 @@ class UserManagementController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit($id) {
-		$user = user::find($id);
-		return view('edit', compact('user', 'id'));
+		$menu = menu::find($id);
+		return view('backend.menu.edit', compact('menu', 'id'));
 	}
 
 	/**
@@ -66,7 +72,19 @@ class UserManagementController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, $id) {
-		//
+
+		$menu = menu::findOrFail($id);
+		$input = $request->all();
+
+		$menu->fill($input)->save();
+
+		return redirect('menu')->with('success', 'Information has been updated');
+
+/*		$menu->save();
+return redirect('menu');*/
+
+		Session::flash('message', 'Successfully updated nerd!');
+		return Redirect::to('menu');
 	}
 
 	/**
@@ -76,15 +94,8 @@ class UserManagementController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id) {
-		// delete
-		$users = user::where('id', $id)->first();
-		if ($users != null) {
-			$users->delete();
-			Session::flash('message', 'Successfully deleted the nerd!');
-			return Redirect::to('users');
-		}
-
-		// redirect
-
+		$menu = menu::find($id);
+		$menu->delete();
+		return redirect('menu')->with('success', 'Information has been  deleted');
 	}
 }
