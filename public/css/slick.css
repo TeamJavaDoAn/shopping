@@ -117,3 +117,36 @@
 .slick-arrow.slick-hidden {
     display: none;
 }
+.cart{
+    color: red;
+    text-align: center;
+    font-size: 20px;
+    padding: 5px;
+}
+
+.btn-increment-decrement {
+    display: inline-block;
+    padding: 5px 0px;
+    background: #e2e2e2;
+    width: 30px;
+    text-align: center;
+    cursor:pointer;
+}
+
+.btn-increment-decrement {
+    display: inline-block;
+    padding: 5px 0px;
+    background: #e2e2e2;
+    width: 30px;
+    text-align: center;
+    cursor:pointer;
+}
+
+.input-quantity {
+    border: 0px;
+    width: 30px;
+    display: inline-block;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+}

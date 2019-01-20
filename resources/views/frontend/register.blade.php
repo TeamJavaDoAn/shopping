@@ -17,6 +17,12 @@
                     </ul>
                 </div>
             @endif
+            <!-- Error Messages -->
+            @foreach (['danger', 'warning', 'success', 'info'] as $key)
+              @if(Session::has($key))
+                <p class="alert alert-{{ $key }}" style="text-align: center;">{{ Session::get($key) }}</p>
+              @endif
+            @endforeach
             <form role="form" action="{{route('handlingRegister')}}" method="post">
               @csrf
                 <br style="clear:both">

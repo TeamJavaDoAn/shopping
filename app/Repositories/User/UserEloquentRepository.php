@@ -62,7 +62,7 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
      */
     public function updateUserActiveCode($user_id, $active_code)
     {
-      $result = $this->_model->where('id', $user_id)
+      $result = $this->_model->where('user_id', $user_id)
                   ->update(['active' => $active_code]);
       return $result;
     }

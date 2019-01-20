@@ -57,13 +57,13 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
-                        <div>
-                            <a href="#">
-                                <i class="fa fa-heart-o"></i>
-                                <span>Your Wishlist</span>
-                                <div class="qty">2</div>
-                            </a>
-                        </div>
+                          <div>
+                              <a href="#">
+                                  <i class="fa fa-heart-o"></i>
+                                  <span>Your Wishlist</span>
+                                  <div class="qty">1</div>
+                              </a>
+                          </div>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
@@ -71,7 +71,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
-                                <div class="qty">3</div>
+                                <div class="qty">1</div>
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
@@ -84,6 +84,7 @@
                                             <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
                                         </div>
                                         <button class="delete"><i class="fa fa-close"></i></button>
+                                        <input type="hidden" id="item1_price" value="$95">
                                     </div>
 
                                     <div class="product-widget">

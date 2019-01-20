@@ -8,7 +8,7 @@ use DB;
 class Product extends Model
 {
     protected $table      = 'product';
-    protected $primaryKey = 'pd_id';
+    protected $primaryKey = 'product_id';
 
     /**
      * The name of the "created at" column.
@@ -31,12 +31,12 @@ class Product extends Model
      */
     protected $fillable = [
         'cat_id',
-        'pd_name',
-        'pd_description',
-        'pd_price',
-        'pd_qty',
-        'pd_image',
-        'pd_thumbnail',
+        'name',
+        'description',
+        'price',
+        'quantity',
+        'image',
+        'thumbnail',
         'created_at',
         'updated_at'
     ];

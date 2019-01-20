@@ -11,7 +11,7 @@
     Password: <b>{{$user->password}}</b><br>
     Bạn hãy click vào đường link sau đây để hoàn tất việc đăng ký.
     </br>
-    <a href="{{ route('activeCode', ['id' => $user->id,'verification_code' => $user->verification_code])}}">{{ $user->verification_code }}</a>
+    <a href="{{ route('activeCode', ['id' => $user->user_id,'verification_code' => $user->verification_code])}}">{{ $user->verification_code }}</a>
   </p>
 </body>
 </html>

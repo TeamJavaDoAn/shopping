@@ -24,6 +24,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-      return view('frontend.home');
+      $products = $this->productRepository->getAll();
+      return view('frontend.home', ['products' => $products]);
     }
 }

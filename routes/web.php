@@ -26,4 +26,8 @@ Route::namespace('Frontend')->group(function () {
     Route::post("/login", "LoginController@login")->name('login');
     Route::get("/forgotPassword", "ForgotPasswordController@forgotPassword")->name('forgotPassword');
     Route::get("/logout", "LogoutController@logout")->name('logout');
+
+    // Add Cart
+    Route::post("/cart-add", "AddCartController@addCart")->name('cartAdd');
+    Route::get("/cart-update", "AddCartController@updateCart")->name('cartUpdate');
 });

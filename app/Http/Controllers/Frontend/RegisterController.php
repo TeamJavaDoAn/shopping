@@ -64,6 +64,8 @@ class RegisterController extends Controller
         Mail::send('frontend.mailfb',['user' => $user], function ($message) use ($user) {
           $message->to($user->email, $user->name)->subject('Link active register');
         });
+        // Flash a successful message
+        $request->session()->flash('warning', 'Xin vui lòng kích hoạt tài khoản trong mail!');
       } else {
         throw new \Exception("Error Processing Request", 1);
       }

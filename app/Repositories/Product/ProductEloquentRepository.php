@@ -18,9 +18,27 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
      * Get 5 posts hot in a month the last
      * @return mixed
      */
-    public function getPostHost()
+    public function getProductId($id)
     {
-        // return $this->model::where('created_at', '>=', Carbon::now()->subMonth())->orderBy('view', 'desc')->take(5)->get();
-        return false;
+        return $this->_model::where('product_id', $id)->first();
+    }
+
+    /**
+     * [getAllAttributes description]
+     * @return [type] [description]
+     */
+    public function getAllAttributes()
+    {
+      $columns = $this->_model->getFillable();
+      $attributes = $this->_model->getAttributes();
+
+      foreach ($columns as $column)
+      {
+          if (!array_key_exists($column, $attributes))
+          {
+              $attributes[$column] = null;
+          }
+      }
+      return $attributes;
     }
 }

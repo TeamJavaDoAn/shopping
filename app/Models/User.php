@@ -8,7 +8,7 @@ use DB;
 class User extends Model
 {
 		protected $table      = 'users';
-		protected $primaryKey = 'id';
+		protected $primaryKey = 'user_id';
 
 		/**
 		 * The name of the "created at" column.

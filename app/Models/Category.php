@@ -38,4 +38,9 @@ class Category extends Model
     ];
 
     public $timestamp = true;
+
+    public function products()
+    {
+      return $this->hasMany(Product::class, 'cat_id');
+    }
 }

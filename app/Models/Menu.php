@@ -30,8 +30,8 @@ class Menu extends Model
      * @var array
      */
     protected $fillable = [
-        'menu_name',
-        'menu_link',
+        'name',
+        'link',
         'created_at',
         'updated_at'
     ];

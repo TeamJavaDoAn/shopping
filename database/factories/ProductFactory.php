@@ -4,6 +4,11 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\Product::class, function (Faker $faker) {
     return [
-        'pd_description' => $faker->paragraph,
+      'name'        => $faker->lastName,
+      'description' => $faker->state,
+      'price'       => $faker->latitude,
+      'quantity'    => $faker->randomDigit,
+      'image'       => $faker->address,
+      'thumbnail'   => $faker->country 
     ];
 });

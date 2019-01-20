@@ -40,10 +40,10 @@ class ActiveCodeController extends Controller
       $dataArr = [
         'active' => '1'
       ];
-      $this->userRepository->updateUserActiveCode($request['id'], $dataArr['active']);
-
-      // Flash a successful message
-      $request->session()->flash('success', 'Chào mừng bạn đến với trang shopping!');
+      if($this->userRepository->updateUserActiveCode($request['id'], $dataArr['active'])){
+        // Flash a successful message
+        $request->session()->flash('success', 'Chào mừng bạn đến với trang shopping. <br> Vui lòng đăng nhập tài khoản!');
+      }
     } catch (\Exception $e) {
       // Log error
       \Log::error($e->getMessage());
