@@ -29,5 +29,9 @@ Route::namespace('Frontend')->group(function () {
 
     // Add Cart
     Route::post("/cart-add", "AddCartController@addCart")->name('cartAdd');
-    Route::get("/cart-update", "AddCartController@updateCart")->name('cartUpdate');
+    Route::post("/cart-update", "AddCartController@updateCart")->name('cartUpdate');
+    Route::post("/cart-delete", "AddCartController@deleteCart")->name('cartDelete');
+    Route::get("/cart-delete-complete", "AddCartController@deleteCartComplete")->name('cartDeleteComplete');
+    Route::get("/cart-pay", "AddPayController@hanlderPay")->name('cartPay');
+    Route::post("/cart-handlePay", "AddPayController@cartHandlePay")->name('cartHandelPay');
 });

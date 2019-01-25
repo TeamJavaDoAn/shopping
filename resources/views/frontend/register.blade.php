@@ -26,38 +26,38 @@
             <form role="form" action="{{route('handlingRegister')}}" method="post">
               @csrf
                 <br style="clear:both">
-                  <h3 style="margin-bottom: 25px; text-align: center;">Sign Up</h3>
+                  <h3 style="margin-bottom: 25px; text-align: center;">Đăng ký</h3>
                   <div class="form-group">
-                    Your Name
+                    Họ tên
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{ old('name') }}" required>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Xin vui lòng nhập họ tên" value="{{ old('name') }}" required>
                   </div>
                   <div class="form-group">
-                      Your Email
+                     Email
                   </div>
                   <div class="form-group">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off" value="{{ old('email') }}" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Xin vui lòng nhập email" autocomplete="off" value="{{ old('email') }}" required>
                   </div>
                   <div class="form-group">
-                      Phone
+                     Số điện thoại
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" autocomplete="off" value="{{ old('phone') }}" required>
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Xin vui lòng nhập phone" autocomplete="off" value="{{ old('phone') }}" required>
                   </div>
                   <div class="form-group">
-                      Password
+                     Mật khẩu
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" value="{{ old('password') }}" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Xin vui lòng nhập mật khẩu" autocomplete="off" value="{{ old('password') }}" required>
                   </div>
                   <div class="form-group">
-                      Confirm password
+                      Nhập lại mật khẩu
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control" id="confirm" name="confirm_password" placeholder="Confirm password" autocomplete="off" value="{{ old('confirm_password') }}" required>
+                    <input type="password" class="form-control" id="confirm" name="confirm_password" placeholder="Xin vui lòng nhập lại mật khẩu" autocomplete="off" value="{{ old('confirm_password') }}" required>
                   </div>
-                <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Register</button>
+                <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Đăng ký</button>
             </form>
           </div>
         </div>

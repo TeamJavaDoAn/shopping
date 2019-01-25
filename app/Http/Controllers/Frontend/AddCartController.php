@@ -32,32 +32,56 @@ class AddCartController extends Controller
      */
     public function addCart(Request $request)
     {
-      $this->productId    = $request['cart-id'];
-      $this->productById  = $this->productRepository->getProductId($this->productId);
-      $cartInfo = [
-        'id'       => $this->productId,
-        'name'     => $this->productById->name,
-        'price'    => $this->productById->price,
-        'image'    => $this->productById->image,
-        'quantity' => (int)$request['qty'],
-      ];
-      Cart::add($cartInfo);
-      $this->data['cartProducts'] = Cart::getContent();
+      if ($request->isMethod('post')) {
+        $this->productId    = $request['cart-id'];
+        $this->productById  = $this->productRepository->getProductId($this->productId);
+        $cartInfo = [
+          'id'       => $this->productId,
+          'name'     => $this->productById->name,
+          'price'    => $this->productById->price,
+          'image'    => $this->productById->image,
+          'qty'      => (int)$request['qty'],
+        ];
+        Cart::add($cartInfo);
+      }
+      $this->data['cartProducts'] = Cart::content();
 
       return view('frontend.showCart',$this->data);
     }
 
+    /**
+     * [updateCart description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function updateCart(Request $request)
     {
-      dd($request);
-      Cart::update((int)$request['cart-id'], array(
-        'quantity' => array(
-            'relative' => false,
-            'value'    => (int)$request['new_quantity'],
-        ),
-      ));
-      $this->data['cartProducts'] = Cart::getContent();
+      $cartData = Cart::content();
+      foreach ($cartData as $key => $value) {
+        Cart::update($value->rowId, $request['valueQty']);
+      }
 
+      return view('frontend.showCart',['cartProducts' => $cartData]);
+    }
+
+    /**
+     * [deleteCart description]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function deleteCart(Request $request)
+    {
+      Cart::remove($request->rowId);
+      return redirect()->route('cartDeleteComplete');
+    }
+
+    /**
+     * [deleteCartComplete description]
+     * @return [type] [description]
+     */
+    public function deleteCartComplete()
+    {
+      $this->data['cartProducts'] = Cart::content();
       return view('frontend.showCart',$this->data);
     }
 }

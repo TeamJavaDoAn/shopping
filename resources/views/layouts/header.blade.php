@@ -1,17 +1,16 @@
-<!-- HEADER -->
 <header>
     <!-- TOP HEADER -->
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
                 <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-                <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+                <li><a href="#"><i class="fa fa-envelope-o"></i> manhsangtn@email.com</a></li>
+                <li><a href="#"><i class="fa fa-map-marker"></i> Đại Học Mở TP.HCM</a></li>
             </ul>
             <ul class="header-links pull-right">
               @if(!Request::session()->has('username'))
-                <li><a href="{{ route('register') }}"><i class="fa fa-dollar"></i> Register</a></li>
-                <li><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user-o"></i> Login</a></li>
+                <li><a href="{{ route('register') }}"><i class="fa fa-dollar"></i> Đăng ký</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-user-o"></i> Đăng nhập</a></li>
               @else
                 <li><a href="">{{ Request::session()->get('username') }}</a></li>
                 <li><a href="{{ route('logout') }}"><i class="fa fa-user-o"></i>Logout</a></li>
@@ -31,7 +30,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="#" class="logo">
-                            <img src="./img/logo.png" alt="">
+                            <img src="./img/hinh.jpg" alt="" style="width: 170px; height: 70px">
                         </a>
                     </div>
                 </div>
@@ -42,12 +41,13 @@
                     <div class="header-search">
                         <form>
                             <select class="input-select">
-                                <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
+                                <option value="0">Danh mục</option>
+                                <option value="1">Laptop</option>
+                                <option value="2">Table</option>
+                                <option value="3">Phone</option>
                             </select>
-                            <input class="input" placeholder="Search here">
-                            <button class="search-btn">Search</button>
+                            <input class="input" placeholder="Tìm kiếm">
+                            <button class="search-btn">Tìm kiếm</button>
                         </form>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                           <div>
                               <a href="#">
                                   <i class="fa fa-heart-o"></i>
-                                  <span>Your Wishlist</span>
+                                  <span>yêu thích</span>
                                   <div class="qty">1</div>
                               </a>
                           </div>
@@ -70,7 +70,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
+                                <span>Giỏ hàng</span>
                                 <div class="qty">1</div>
                             </a>
                             <div class="cart-dropdown">
@@ -133,19 +133,19 @@
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
     <div class="loginmodal-container">
-      <h1>Login to Your Account</h1><br>
+      <h1>Đăng nhập</h1><br>
       <form action="{{route('login')}}" method="post">
         @csrf
-        <b>Username</b>
-        <input type="text" name="username" placeholder="Username" required>
-        <b>Password</b>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+        <b>Họ và tên</b>
+        <input type="text" name="username" placeholder="Xin vui lòng họ và tên" required>
+        <b>Mật khẩu</b>
+        <input type="password" name="password" placeholder="Xin vui lòng nhập mật khẩu" required>
+        <input type="submit" name="login" class="login loginmodal-submit" value="Đăng nhập">
       </form>
       <div class="login-help">
-          <a href="{{route('register')}}">Register</a> - <a href="{{route('forgotPassword')}}">Forgot Password</a>
+          <a href="{{route('register')}}">Đăng ký</a> - <a href="{{route('forgotPassword')}}">Quên mật khẩu</a>
       </div>
     </div>
   </div>
 </div>
-<!-- /popup login form -->
+<!-- /popup login form
