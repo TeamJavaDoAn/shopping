@@ -14,4 +14,6 @@ interface ProductRepositoryInterface
    * @return [type] [description]
    */
   public function getAllAttributes();
+
+  public function getProductInCate();
 }

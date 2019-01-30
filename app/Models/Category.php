@@ -8,7 +8,7 @@ use DB;
 class Category extends Model
 {
     protected $table      = 'category';
-    protected $primaryKey = 'cate_id';
+    protected $primaryKey = 'cat_id';
 
     /**
      * The name of the "created at" column.

@@ -41,4 +41,14 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
       }
       return $attributes;
     }
+
+    /**
+     * [getProductInCate description]
+     * @return [type] [description]
+     */
+    public function getProductInCate()
+    {
+      $result = $this->_model->hasOne('App\Models\Category', "cat_id", "product_id");
+      return $result;
+    }
 }

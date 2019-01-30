@@ -5,17 +5,24 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Category\CateRepositoryInterface;
 
 class HomeController extends Controller
 {
+    /**
+     * @var CateRepositoryInterface|\App\Repositories\Cate
+     */
+    protected $cateRepository;
+
     /**
      * @var ProductRepositoryInterface|\App\Repositories\Product
      */
     protected $productRepository;
 
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function __construct(ProductRepositoryInterface $productRepository, CateRepositoryInterface $cateRepository)
     {
-        $this->productRepository = $productRepository;
+        $this->cateRepository     = $cateRepository;
+        $this->productRepository  = $productRepository;
     }
 
     /**

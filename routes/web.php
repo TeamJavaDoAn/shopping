@@ -34,4 +34,7 @@ Route::namespace('Frontend')->group(function () {
     Route::get("/cart-delete-complete", "AddCartController@deleteCartComplete")->name('cartDeleteComplete');
     Route::get("/cart-pay", "AddPayController@hanlderPay")->name('cartPay');
     Route::post("/cart-handlePay", "AddPayController@cartHandlePay")->name('cartHandelPay');
+
+    // category
+    Route::post("/menuCate", "HomeController@menuCate")->name('menuCate');
 });
