@@ -15,5 +15,7 @@ interface ProductRepositoryInterface
    */
   public function getAllAttributes();
 
-  public function getProductInCate();
+  public function getProductCate($cat_id);
+
+  public function getProductInCate($cat_id);
 }

@@ -30,7 +30,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="#" class="logo">
-                            <img src="./img/hinh.jpg" alt="" style="width: 170px; height: 70px">
+                            <img src="{{URL::asset('img/hinh.jpg')}}" alt="" style="width: 170px; height: 70px">
                         </a>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                                 <div class="cart-list">
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
+                                            <img src="{{URL::asset('img/product01.png')}}" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">product name goes here</a></h3>
@@ -89,7 +89,7 @@
 
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="./img/product02.png" alt="">
+                                            <img src="{{URL::asset('img/product02.png')}}" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">product name goes here</a></h3>

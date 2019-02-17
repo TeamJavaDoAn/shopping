@@ -31,7 +31,28 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-      $products = $this->productRepository->getAll();
-      return view('frontend.home', ['products' => $products]);
+        $data['category'] = $this->cateRepository->getAll();
+        $data['products'] = $this->productRepository->getProductCate($data['category'][0]['cat_id']);
+        return view('frontend.home', $data);
+    }
+
+    public function menuTab(Request $request)
+    {
+        $arrData    = [];
+        $arrCount   = 0;
+        $cate_id    = $request->id;
+        $data       = $this->productRepository->getProductCate($cate_id);
+        foreach ($data as $key => $value) {
+            $arrData[$arrCount]['id']       = $value['product_id'];
+            $arrData[$arrCount]['name']     = $value['name'];
+            $arrData[$arrCount]['price']    = $value['price'];
+            $arrData[$arrCount]['image']    = $value['image'];
+            $arrData[$arrCount]['sale']     = $value['sale'];
+            $arrData[$arrCount]['quantity'] = $value['quantity'];
+            $arrCount++;
+        }
+        // convert array to json
+        $encodeData = json_encode($arrData);
+        return response()->json(['success'=> $encodeData]);
     }
 }

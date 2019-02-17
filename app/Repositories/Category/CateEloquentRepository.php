@@ -23,4 +23,16 @@ class CateEloquentRepository extends EloquentRepository implements CateRepositor
         $result = $this->_model->hasMany('App\Models\Product', "product_id", "cat_id");
         return $result;
     }
+
+    /**
+     * [getCate description]
+     * @param  [type] $cat_id [description]
+     * @return [type]         [description]
+     */
+    public function getCate($cat_id)
+    {
+      dd($cat_id);
+      $result = $this->_model->where("cat_id", $cat_id)->get();
+      return $result;
+    }
 }

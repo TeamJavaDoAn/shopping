@@ -11,3 +11,25 @@
     margin: 10px 0px 60px;
     border: 1px solid GREY;
 }
+#loading
+{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+#menuTab
+{
+    width:220px;
+    height:auto;
+    float:left;
+    margin: 5px;
+}
+#loading2
+{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+#paging-product{
+    
+}

@@ -30,4 +30,7 @@
 
     <!-- Popup login -->
     {{ Html::style('/css/jquery_popup.css') }}
+
+    <!-- Details product -->
+    {{ Html::style('/css/detail.css') }}
 </head>

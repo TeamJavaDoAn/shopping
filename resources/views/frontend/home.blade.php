@@ -4,14 +4,14 @@
 	<body>
 		@include('layouts.header')
 		@include('layouts.nav')
-    
-    <!-- Error Messages -->
-    @foreach (['danger', 'warning', 'success', 'info'] as $key)
-      @if(Session::has($key))
-        <p class="alert alert-{{ $key }}" style="text-align: center;">{!! Session::get($key) !!}</p>
-      @endif
-    @endforeach
-    <!-- End error -->
+	
+	<!-- Error Messages -->
+	@foreach (['danger', 'warning', 'success', 'info'] as $key)
+	  @if(Session::has($key))
+		<p class="alert alert-{{ $key }}" style="text-align: center;">{!! Session::get($key) !!}</p>
+	  @endif
+	@endforeach
+	<!-- End error -->
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
@@ -79,10 +79,12 @@
 							<h3 class="title">Sản phẩm mới</h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab1">Máy tính xách tay</a></li>
-									<li><a data-toggle="tab" href="#tab1">Điện thoại</a></li>
-									<li><a data-toggle="tab" href="#tab1">Máy ảnh</a></li>
-									<li><a data-toggle="tab" href="#tab1">Tai nghe</a></li>
+									@foreach ($category as $cate)
+										<li {{ $cate->cat_name == 'Máy tính xách tay' ? 'class=active' : ''}} onClick="menuTab({{ $cate->cat_id }})">
+											<a data-toggle="tab" href="#tab{{ $cate->cat_id }}">{{ $cate->cat_name }}</a>
+											<input type="hidden" name="_token" value="{{ csrf_token() }}">
+										</li>
+									@endforeach
 								</ul>
 							</div>
 						</div>
@@ -93,45 +95,53 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="products-tabs">
+								<div id="loading"></div>
+								<!-- tab load ajax -->
+								<div id="tab_load_ajax1">
+									<div class="products-slick" data-nav="#slick-nav-1"></div>
+								</div>
+								<!-- /tab load ajax -->
 								<!-- tab -->
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
 										<!-- product -->
-                    @foreach ($products as $product)
-  										<div class="product">
-  											<div class="product-img">
-                          <img src="./img/{{$product->image}}" alt="">
-  												<div class="product-label">
-  													<span class="sale">-30%</span>
-  													<span class="new">Mới</span>
-  												</div>
-  											</div>
-  											<div class="product-body">
-  												<p class="product-category">Máy tính xách tay</p>
-  												<h3 class="product-name"><a href="#">{{ $product->name }}</a></h3>
-  												<h4 class="product-price">{{ $product->price }} đ <del class="product-old-price">{{ $product->sale }} đ</del></h4>
-  												<div class="product-rating">
-  													<i class="fa fa-star"></i>
-  													<i class="fa fa-star"></i>
-  													<i class="fa fa-star"></i>
-  													<i class="fa fa-star"></i>
-  													<i class="fa fa-star"></i>
-  												</div>
-  												<div class="product-btns">
-  													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Thêm vào danh sách mong muốn</span></button>
-  													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào lúc so sánh</span></button>
-  													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem lướt qua</span></button>
-  												</div>
-  											</div>
-  								      <div class="add-to-cart">
-                          {!! Form::open(['url' => '/cart-add', 'method' => 'POST']) !!}
-                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-                            <input type="hidden" name="cart-id" value="{{$product->product_id}}" />
-                            <input type="hidden" name="qty" value="{{$product->quantity}}" />
-                          {!! Form::close() !!}
-                        </div>
-  										</div>
-                    @endforeach
+										@foreach ($products as $product)
+											<div class="product">
+												<a href="{{ route('productDetail', ['id' => $product->product_id]) }}">
+													<div class="product-img">
+														<img src="./img/{{$product->image}}" alt="">
+														<div class="product-label">
+															<span class="sale">-30%</span>
+															<span class="new">Mới</span>
+														</div>
+													</div>
+												</a>
+												<div class="product-body">
+													<p class="product-category">Máy tính xách tay</p>
+													<h3 class="product-name"><a href="#">{{ $product->name }}</a></h3>
+													<h4 class="product-price">{{ $product->price }} đ <del class="product-old-price">{{ $product->sale }} đ</del></h4>
+													<div class="product-rating">
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+														<i class="fa fa-star"></i>
+													</div>
+													<div class="product-btns">
+														<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Thêm vào danh sách mong muốn</span></button>
+														<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào lúc so sánh</span></button>
+														<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem lướt qua</span></button>
+													</div>
+												</div>
+												<div class="add-to-cart">
+													{!! Form::open(['url' => '/cart-add', 'method' => 'POST']) !!}
+													<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+													<input type="hidden" name="cart-id" value="{{$product->product_id}}" />
+													<input type="hidden" name="qty" value="{{$product->quantity}}" />
+													{!! Form::close() !!}
+												</div>
+											</div>
+										@endforeach
 										<!-- /product -->
 									</div>
 									<div id="slick-nav-1" class="products-slick-nav"></div>
@@ -207,10 +217,11 @@
 							<h3 class="title">Bán chạy nhất</h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab2">Máy tính xách tay</a></li>
-									<li><a data-toggle="tab" href="#tab2">Điện thoại</a></li>
-									<li><a data-toggle="tab" href="#tab2">Máy ảnh</a></li>
-									<li><a data-toggle="tab" href="#tab2">Tai nghe</a></li>
+									@foreach ($category as $cate)
+										<li {{ $cate->cat_name == 'Máy tính xách tay' ? 'class=active' : ''}} onClick="menuTab2({{ $cate->cat_id }})">
+											<a data-toggle="tab" href="#tab{{ $cate->cat_id }}">{{ $cate->cat_name }}</a>
+										</li>
+									@endforeach
 								</ul>
 							</div>
 						</div>
@@ -221,13 +232,21 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="products-tabs">
+								<!-- /tab -->
+								<div id="loading2"></div>
+								<!-- tab load ajax -->
+								<div id="tab_load_ajax2">
+									<div class="products-slick2" data-nav="#slick-nav-1"></div>
+								</div>
+								<!-- /tab load ajax -->
 								<!-- tab -->
-								<div id="tab2" class="tab-pane fade in active">
-									<div class="products-slick" data-nav="#slick-nav-2">
+								<div id="tab2" class="tab-pane active">
+									<div class="products-slick" data-nav="#slick-nav-1">
 										<!-- product -->
-										<div class="product">
+										@foreach ($products as $product)
+											<div class="product">
 											<div class="product-img">
-												<img src="./img/product06.png" alt="">
+						  						<img src="./img/{{$product->image}}" alt="">
 												<div class="product-label">
 													<span class="sale">-30%</span>
 													<span class="new">Mới</span>
@@ -235,8 +254,8 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">Máy tính xách tay</p>
-												<h3 class="product-name"><a href="#">Acer</a></h3>
-												<h4 class="product-price">12980.000 đ <del class="product-old-price">12990.00O đ</del></h4>
+												<h3 class="product-name"><a href="#">{{ $product->name }}</a></h3>
+												<h4 class="product-price">{{ $product->price }} đ <del class="product-old-price">{{ $product->sale }} đ</del></h4>
 												<div class="product-rating">
 													<i class="fa fa-star"></i>
 													<i class="fa fa-star"></i>
@@ -245,137 +264,28 @@
 													<i class="fa fa-star"></i>
 												</div>
 												<div class="product-btns">
-                          <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Thêm vào danh sách mong muốn</span></button>
-                          <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào lúc so sánh</span></button>
-                          <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem lướt qua</span></button>
-                        </div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img/product07.png" alt="">
-												<div class="product-label">
-													<span class="new">NEW</span>
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Thêm vào danh sách mong muốn</span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào lúc so sánh</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem lướt qua</span></button>
 												</div>
 											</div>
-											<div class="product-body">
-												<p class="product-category">Điện thoại</p>
-												<h3 class="product-name"><a href="#">Iphone 7</a></h3>
-												<h4 class="product-price">12.000.000 đ<del class="product-old-price">11.000.000 đ</del></h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star-o"></i>
-												</div>
-												<div class="product-btns">
-                          <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Thêm vào danh sách mong muốn</span></button>
-                          <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào lúc so sánh</span></button>
-                          <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem lướt qua</span></button>
-                        </div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng </button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img/product08.png" alt="">
-												<div class="product-label">
-													<span class="sale">-30%</span>
+												<div class="add-to-cart">
+													{!! Form::open(['url' => '/cart-add', 'method' => 'POST']) !!}
+													<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
+													<input type="hidden" name="cart-id" value="{{$product->product_id}}" />
+													<input type="hidden" name="qty" value="{{$product->quantity}}" />
+													{!! Form::close() !!}
 												</div>
 											</div>
-											<div class="product-body">
-												<p class="product-category">Sam sung</p>
-												<h3 class="product-name"><a href="#"></a>Sam sung Note 8</h3>
-												<h4 class="product-price">14.000.000 đ <del class="product-old-price">13.000.000 đ </del></h4>
-												<div class="product-rating">
-												</div>
-												<div class="product-btns">
-                          <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Thêm vào danh sách mong muốn</span></button>
-                          <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào lúc so sánh</span></button>
-                          <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem lướt qua</span></button>
-                        </div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img/product09.png" alt="">
-											</div>
-											<div class="product-body">
-												<p class="product-category">Nokia</p>
-												<h3 class="product-name"><a href="#">Nokia 1</a></h3>
-												<h4 class="product-price">1280.00 đ <del class="product-old-price">1180.00 đ</del></h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-                          <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Thêm vào danh sách mong muốn</span></button>
-                          <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào lúc so sánh</span></button>
-                          <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem lướt qua</span></button>
-                        </div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-											</div>
-										</div>
-										<!-- /product -->
-
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<img src="./img/product01.png" alt="">
-											</div>
-											<div class="product-body">
-												<p class="product-category">BlackBerry</p>
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
-												<h4 class="product-price">1280.00 đ<del class="product-old-price">1090.00 đ</del></h4>
-												<div class="product-rating">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</div>
-												<div class="product-btns">
-                          <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">Thêm vào danh sách mong muốn</span></button>
-                          <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào lúc so sánh</span></button>
-                          <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem lướt qua</span></button>
-                        </div>
-											</div>
-											<div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>
-											</div>
-										</div>
+										@endforeach
 										<!-- /product -->
 									</div>
-									<div id="slick-nav-2" class="products-slick-nav"></div>
+									<div id="slick-nav-1" class="products-slick-nav"></div>
 								</div>
-								<!-- /tab -->
 							</div>
 						</div>
 					</div>
-					<!-- /Products tab & slick -->
+					<!-- Products tab & slick -->
 				</div>
 				<!-- /row -->
 			</div>
@@ -468,15 +378,15 @@
 
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product03.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Máy tính xách tay </p>
-                    <h3 class="product-name"><a href="#">Dell 8</a></h3>
-                    <h4 class="product-price">1982.00 đ<del class="product-old-price">1890.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product03.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Máy tính xách tay </p>
+					<h3 class="product-name"><a href="#">Dell 8</a></h3>
+					<h4 class="product-price">1982.00 đ<del class="product-old-price">1890.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- product widget -->
 							</div>
 						</div>
@@ -494,15 +404,15 @@
 							<div>
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product04.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Điện thoại</p>
-                    <h3 class="product-name"><a href="#">Iphone 9</a></h3>
-                    <h4 class="product-price">1980.00 đ<del class="product-old-price">1890.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product04.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Điện thoại</p>
+					<h3 class="product-name"><a href="#">Iphone 9</a></h3>
+					<h4 class="product-price">1980.00 đ<del class="product-old-price">1890.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- /product widget -->
 
 								<!-- product widget -->
@@ -548,28 +458,28 @@
 
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product08.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Laptop</p>
-                    <h3 class="product-name"><a href="#">Acer 8</a></h3>
-                    <h4 class="product-price">1880.00 đ<del class="product-old-price">1890.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product08.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Laptop</p>
+					<h3 class="product-name"><a href="#">Acer 8</a></h3>
+					<h4 class="product-price">1880.00 đ<del class="product-old-price">1890.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- /product widget -->
 
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product09.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Laptop</p>
-                    <h3 class="product-name"><a href="#">Acer 9</a></h3>
-                    <h4 class="product-price">1980.00 đ<del class="product-old-price">1990.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product09.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Laptop</p>
+					<h3 class="product-name"><a href="#">Acer 9</a></h3>
+					<h4 class="product-price">1980.00 đ<del class="product-old-price">1990.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- product widget -->
 							</div>
 						</div>
@@ -589,82 +499,82 @@
 							<div>
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product07.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Laptop</p>
-                    <h3 class="product-name"><a href="#">Acer 2</a></h3>
-                    <h4 class="product-price">1780.00 đ<del class="product-old-price">1990.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product07.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Laptop</p>
+					<h3 class="product-name"><a href="#">Acer 2</a></h3>
+					<h4 class="product-price">1780.00 đ<del class="product-old-price">1990.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- /product widget -->
 
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product08.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Iphone</p>
-                    <h3 class="product-name"><a href="#">Iphone 6</a></h3>
-                    <h4 class="product-price">6080.00 đ<del class="product-old-price">6790.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product08.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Iphone</p>
+					<h3 class="product-name"><a href="#">Iphone 6</a></h3>
+					<h4 class="product-price">6080.00 đ<del class="product-old-price">6790.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- /product widget -->
 
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product02.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Laptop</p>
-                    <h3 class="product-name"><a href="#">Acer 4</a></h3>
-                    <h4 class="product-price">1980.00 đ<del class="product-old-price">1990.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product02.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Laptop</p>
+					<h3 class="product-name"><a href="#">Acer 4</a></h3>
+					<h4 class="product-price">1980.00 đ<del class="product-old-price">1990.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- product widget -->
 							</div>
 
 							<div>
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product07.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Điện Thoại</p>
-                    <h3 class="product-name"><a href="#">Nokia 10</a></h3>
-                    <h4 class="product-price">1980.00 đ<del class="product-old-price">1990.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product07.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Điện Thoại</p>
+					<h3 class="product-name"><a href="#">Nokia 10</a></h3>
+					<h4 class="product-price">1980.00 đ<del class="product-old-price">1990.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- /product widget -->
 
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product05.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Laptop</p>
-                    <h3 class="product-name"><a href="#">Acer 5</a></h3>
-                    <h4 class="product-price">1280.00 đ<del class="product-old-price">1290.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product05.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Laptop</p>
+					<h3 class="product-name"><a href="#">Acer 5</a></h3>
+					<h4 class="product-price">1280.00 đ<del class="product-old-price">1290.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- /product widget -->
 
 								<!-- product widget -->
 								<div class="product-widget">
-                  <div class="product-img">
-                    <img src="./img/product09.png" alt="">
-                  </div>
-                  <div class="product-body">
-                    <p class="product-category">Laptop</p>
-                    <h3 class="product-name"><a href="#">Acer 8</a></h3>
-                    <h4 class="product-price">1980.00 đ<del class="product-old-price">1990.00 đ</del></h4>
-                  </div>
-                </div>
+				  <div class="product-img">
+					<img src="./img/product09.png" alt="">
+				  </div>
+				  <div class="product-body">
+					<p class="product-category">Laptop</p>
+					<h3 class="product-name"><a href="#">Acer 8</a></h3>
+					<h4 class="product-price">1980.00 đ<del class="product-old-price">1990.00 đ</del></h4>
+				  </div>
+				</div>
 								<!-- product widget -->
 							</div>
 						</div>

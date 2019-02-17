@@ -36,5 +36,9 @@ class AppServiceProvider extends ServiceProvider
           \App\Repositories\Category\CateRepositoryInterface::class,
           \App\Repositories\Category\CateEloquentRepository::class
       );
+      $this->app->singleton(
+          \App\Repositories\Contact\ContactRespositoryInterface::class,
+          \App\Repositories\Contact\ContactEloquentRespository::class
+      );
     }
 }

@@ -18,7 +18,6 @@ Route::namespace('Frontend')->group(function () {
     Route::get("/laptop", "ProductController@laptop")->name('laptop');
     Route::get("/smartphone", "ProductController@smartphone")->name('smartphone');
     Route::get("/cameras", "ProductController@cameras")->name('cameras');
-    Route::get("/contact", "ProductController@contact")->name('contact');
 
     Route::get("/register", "RegisterController@register")->name('register');
     Route::post("/handlingRegister", "RegisterController@handlingRegister")->name('handlingRegister');
@@ -36,5 +35,12 @@ Route::namespace('Frontend')->group(function () {
     Route::post("/cart-handlePay", "AddPayController@cartHandlePay")->name('cartHandelPay');
 
     // category
-    Route::post("/menuCate", "HomeController@menuCate")->name('menuCate');
+    Route::post("/", "HomeController@menuTab")->name('menuTab');
+
+    // product detail
+    Route::get("/detail/{id}", "ProductController@detail")->name('productDetail');
+
+    // contact
+    Route::get("/contact", "ContactController@index")->name('contact');
+    Route::post("/complete", "ContactController@complete")->name('complete');
 });
