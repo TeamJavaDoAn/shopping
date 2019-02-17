@@ -36,6 +36,7 @@
                     @foreach($product as $value)
                       <div class="col-md-3 col-xs-6">
                           <div class="product">
+                            <a href="{{ route('productDetail', ['id' => $value->product_id]) }}">
                               <div class="product-img">
                                   <img src="./img/{{ $value->image }}" alt="">
                                   <div class="product-label">
@@ -43,6 +44,7 @@
                                       <span class="new">Mới</span>
                                   </div>
                               </div>
+                            </a>
                               <div class="product-body">
                                   <p class="product-category">{{ $value->name }}</p>
                                   <h3 class="product-name"><a href="#"> {{ $value->name }} </a></h3>
