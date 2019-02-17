@@ -9,10 +9,9 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
-Route::namespace('Frontend')->group(function () {
-
+Route::namespace ('Frontend')->group(function () {
     Route::get("/", "HomeController@index")->name('home');
     Route::get("/cate", "CateController@index")->name('cate');
     Route::get("/laptop", "ProductController@laptop")->name('laptop');
@@ -43,4 +42,10 @@ Route::namespace('Frontend')->group(function () {
     // contact
     Route::get("/contact", "ContactController@index")->name('contact');
     Route::post("/complete", "ContactController@complete")->name('complete');
+});
+
+Route::namespace ('Backend')->group(function () {
+	Route::get("/admin", "AdminPageController@index")->name('admin');
+	Route::resource('users', 'UserManagementController');
+	Route::resource('menu', 'MenuController');
 });

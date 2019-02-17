@@ -56,7 +56,7 @@ function menuTab(cat_id)
                                 html += '</div>';
                             html += '</div>';
                             html += '<div class="add-to-cart">';
-                                html +='<form action="/cart-add" method="post" enctype="multipart/form-data">';
+                                html +='<form action="./cart-add" method="post" enctype="multipart/form-data">';
                                     html += '<input type="hidden" name="_token" value="'+secure_token+'">';
                                     html +='<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</button>';
                                     html +='<input type="hidden" name="cart-id" value="'+item['id']+'" />';
