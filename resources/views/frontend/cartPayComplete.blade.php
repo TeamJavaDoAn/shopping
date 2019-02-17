@@ -15,7 +15,7 @@
     	<li>Địa chỉ nhận hàng <b>{{ $cartPay->message }}</b></li>
     </ul>
     Các sản phẩm trong đơn hàng:
-    <div><img src="{{ URL::asset('img/product01.png') }}" alt="image" style="width:224px"></div>
+    <div><img src="{{ $message->embed(public_path() . '/img/product01.png')}}" alt="image" style="width:224px"></div>
   </p>
 </body>
 </html>

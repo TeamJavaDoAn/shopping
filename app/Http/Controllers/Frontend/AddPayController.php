@@ -53,7 +53,7 @@ class AddPayController extends Controller
          'email'    => $request->email,
          'city'     => $request->city,
          'message'  => $request->message,
-         'image'    => $request->image,
+         'image'    => $tmp['image'],
          'rowId'    => $tmp['rowId'],
         ];
         // send mail
