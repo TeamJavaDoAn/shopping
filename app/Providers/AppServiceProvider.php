@@ -37,6 +37,18 @@ class AppServiceProvider extends ServiceProvider
           \App\Repositories\Category\CateEloquentRepository::class
       );
       $this->app->singleton(
+          \App\Repositories\User\UserRepositoryInterface::class,
+          \App\Repositories\User\UserEloquentRepository::class
+      );
+      $this->app->singleton(
+          \App\Repositories\CartItems\CartItemsRepositoryInterface::class,
+          \App\Repositories\CartItems\CartItemsEloquentRepository::class
+      );
+      $this->app->singleton(
+          \App\Repositories\CartPays\CartPaysRepositoryInterface::class,
+          \App\Repositories\CartPays\CartPaysEloquentRepository::class
+      );
+      $this->app->singleton(
           \App\Repositories\Contact\ContactRespositoryInterface::class,
           \App\Repositories\Contact\ContactEloquentRespository::class
       );

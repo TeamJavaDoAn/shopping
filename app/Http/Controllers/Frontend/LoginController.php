@@ -39,7 +39,8 @@ class LoginController extends Controller
           $request->session()->forget($request['username']);
         } else {
           $request->session()->flash('success', 'Bạn đăng nhập thành công!');
-          $request->session()->put('username', $request['username']); 
+          $request->session()->put('user_id', $data->user_id);
+          $request->session()->put('username', $request['username']);
         }
       }
     } catch (\Exception $e) {

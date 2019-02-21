@@ -14,6 +14,7 @@
                         <th>Giá</th>
                         <th>Số lượng</th>
                         <th>Thành tiền</th>
+                        <th>Sửa</th>
                         <th>Xoá</th>
                     </tr>
                 </thead>
@@ -22,21 +23,26 @@
                     @foreach ($cartProducts as $cartProduct)
                         <tr>
                             <td>
-                              <img src="{{ asset('/img/'. $cartProduct->image) }}" width="100" height="100">
-                              {{ $cartProduct->name }}
+                                <img src="{{ asset('/img/'. $cartProduct->image) }}" width="100" height="100">
+                                {{ $cartProduct->name }}
                             </td>
                             <td>{{ $cartProduct->price }} đ</td>
                             <td>
-                              <div class="btn-increment-decrement" onClick="decrement_quantity({{ $cartProduct->id }})">-</div>
-                              <input class="input-quantity" onChange="changeValue()" id="input-quantity-{{ $cartProduct->id }}" value="{{ $cartProduct->qty }}">
-                              <div class="btn-increment-decrement" onClick="increment_quantity({{ $cartProduct->id }})">+</div>
+                                <div class="input-quantity">{{ $cartProduct->qty }}</div>
+                                <input class="input-quantity_click" onChange="changeValue()" id="input-quantity-{{ $cartProduct->id }}" value="{{ $cartProduct->qty }}" style="display:none">
                             </td>
                             <td>{{ $cartProduct->subtotal() }} đ</td>
                             <td>
-                              {!! Form::open(['url' => '/cart-delete', 'method' => 'POST']) !!}
-                                <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
-                                <input type="hidden" name="rowId" value="{{$cartProduct->rowId}}">
-                              {!! Form::close() !!}
+                                <span class="glyphicon glyphicon-pencil" id="sua"></span>
+                                {!! Form::open(['url' => '/cart-update', 'method' => 'POST']) !!}
+                                    <p data-placement="top" data-toggle="tooltip" title="Update" id="update" style="display:none"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#update" ><span class="glyphicon glyphicon-ok"></span></button></p>
+                                {!! Form::close() !!}
+                            </td>
+                            <td>
+                                {!! Form::open(['url' => '/cart-delete', 'method' => 'POST']) !!}
+                                    <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p>
+                                    <input type="hidden" name="rowId" value="{{$cartProduct->rowId}}">
+                                {!! Form::close() !!}
                             </td>
                         </tr>
                     @endforeach
